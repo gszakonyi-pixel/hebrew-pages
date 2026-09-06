@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanuló oldal</title>
+
+    <!-- Ez a saját CSS fájlunk, ami a kinézetért felel -->
+    <link rel="stylesheet" href="style.css">
+
+    <!--
+        Ez a "marked.js" nevű könyvtár egy CDN-ről (internetes tárhelyről) töltődik be.
+        A feladata: a Markdown (.md) szöveget szép HTML kóddá alakítja.
+        Nekünk emiatt nem kell saját Markdown-értelmezőt írnunk.
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+</head>
+<body>
+
+    <!-- ==================== FELSŐ MENÜ (HEADER) ==================== -->
+    <!-- Ez a sáv mindig látszik az oldal tetején -->
+    <header class="header">
+        <div class="header-inner">
+
+            <!-- A hamburger gomb (☰) nyitja/zárja az oldalsó menüt -->
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menü megnyitása">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Az oldal neve / logója. Kattintásra visszavisz a főoldalra. -->
+            <a href="#" class="logo" id="logoLink">Tanuló oldal</a>
+
+            <!--
+                A felső menü gombjai.
+                Egyelőre üresek (nincs funkciójuk) — ezt bővítheted majd:
+                pl. adj hozzájuk egy onclick="valamiFuggveny()" attribútumot.
+            -->
+            <nav class="top-nav">
+                <button class="top-nav-btn">Kezdőlap</button>
+                <button class="top-nav-btn">Rólunk</button>
+                <button class="top-nav-btn">Kapcsolat</button>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- ==================== OLDALSÓ MENÜ (SIDEBAR) ==================== -->
+    <!--
+        Ez a menü alapból "elrejtve" van a képernyő bal széle mögött (lásd style.css).
+        Amikor a hamburger gombra kattintunk, a JS hozzáadja az "sidebar-open" osztályt,
+        ami betolja a képernyőre.
+    -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span>Menü</span>
+            <!-- Bezáró gomb (X) -->
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Menü bezárása">&times;</button>
+        </div>
+
+        <!--
+            Az oldalsó menü linkjei.
+            Egyelőre üres funkciók (href="#") — ide kerülhetnek majd
+            pl. kategóriák, beállítások, keresés stb.
+        -->
+        <ul class="sidebar-list">
+            <li><a href="#">Kategóriák</a></li>
+            <li><a href="#">Kedvencek</a></li>
+            <li><a href="#">Beállítások</a></li>
+            <li><a href="#">Súgó</a></li>
+        </ul>
+    </nav>
+
+    <!--
+        Az "overlay" egy félig átlátszó sötét réteg, ami a sidebar mögött jelenik meg,
+        amikor a menü nyitva van. Ha erre kattintunk, a menü bezáródik.
+    -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ==================== FŐ TARTALOM ==================== -->
+    <main class="main-content">
+
+        <!-- Ez a nézet a cikkek listáját mutatja (ez a "főoldal" nézet) -->
+        <section id="articleListView">
+            <h1 class="page-title">Cikkek</h1>
+            <p class="page-subtitle">Válassz egy cikket az olvasáshoz.</p>
+
+            <!--
+                Ide fogja a JavaScript automatikusan berakni a cikk-kártyákat,
+                az articles.js fájlban található lista alapján.
+            -->
+            <div class="article-grid" id="articleGrid"></div>
+        </section>
+
+        <!--
+            Ez a nézet egy konkrét cikket mutat. Alapból rejtve van (lásd CSS: "hidden" osztály),
+            és csak akkor jelenik meg, amikor valaki rákattint egy cikk-kártyára.
+        -->
+        <section id="articleView" class="hidden">
+            <button class="back-btn" id="backBtn">&larr; Vissza a cikkekhez</button>
+            <article class="article-content" id="articleContent">
+                <!-- Ide kerül majd a beolvasott és átalakított cikk szövege -->
+            </article>
+        </section>
+
+    </main>
+
+    <!-- ==================== SAJÁT JAVASCRIPT FÁJLJAINK ==================== -->
+    <!-- Fontos a sorrend: előbb a cikklista, utána a fő logika -->
+    <script src="articles.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+/* ====================================================================
+   SZÍNEK ÉS ALAPBEÁLLÍTÁSOK
+   ====================================================================
+   A ":root" egy speciális hely, ahova "változókat" tehetünk.
+   Így ha egy színt módosítani akarsz, csak itt kell átírnod egyszer,
+   és az egész oldalon mindenhol frissül.
+*/
+:root {
+    --szin-hatter: #FAF7F0;        /* meleg, papírszerű háttérszín */
+    --szin-feher: #FFFFFF;         /* tiszta fehér (kártyákhoz) */
+    --szin-szoveg: #2B2B2B;        /* sötét antracit, a fő szövegszín */
+    --szin-fokek: #2C4A52;         /* palatáblakék - fő szín (fejléc, címek) */
+    --szin-kiemeles: #E07A5F;      /* tompa korall - kiemelő szín (gombok, linkek) */
+    --szin-keret: #DDD6C7;         /* halvány szürkésbarna keretszín */
+
+    --betutipus-cim: Georgia, "Times New Roman", serif;
+    --betutipus-szoveg: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Ez a "reset": eltávolítjuk a böngészők alapértelmezett margóit/paddingjeit,
+   hogy mindenhol ugyanúgy nézzen ki az oldal. */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--betutipus-szoveg);
+    background-color: var(--szin-hatter);
+    color: var(--szin-szoveg);
+    line-height: 1.6;
+}
+
+/* ====================================================================
+   FELSŐ MENÜ (HEADER)
+   ==================================================================== */
+.header {
+    background-color: var(--szin-fokek);
+    color: var(--szin-feher);
+    position: sticky;  /* görgetéskor is a tetején marad */
+    top: 0;
+    z-index: 100;       /* mindig más elemek fölött legyen */
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;      /* középre igazítja a tartalmat */
+    padding: 0.9rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+/* A hamburger gomb 3 vízszintes vonalból áll */
+.hamburger-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0.4rem;
+}
+
+.hamburger-btn span {
+    width: 22px;
+    height: 2px;
+    background-color: var(--szin-feher);
+    display: block;
+}
+
+.logo {
+    font-family: var(--betutipus-cim);
+    font-size: 1.4rem;
+    color: var(--szin-feher);
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: auto; /* ez tolja jobbra a top-nav gombokat */
+}
+
+.top-nav {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.top-nav-btn {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: var(--szin-feher);
+    padding: 0.45rem 0.9rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: var(--betutipus-szoveg);
+    transition: background-color 0.15s ease;
+}
+
+.top-nav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ====================================================================
+   OLDALSÓ MENÜ (SIDEBAR)
+   ==================================================================== */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 260px;
+    background-color: var(--szin-feher);
+    border-right: 1px solid var(--szin-keret);
+    z-index: 200;
+
+    /* Alapból a képernyőn kívülre toljuk (balra), így nem látszik */
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+}
+
+/* Ezt az osztályt a JavaScript adja hozzá, amikor meg akarjuk nyitni a menüt */
+.sidebar.sidebar-open {
+    transform: translateX(0);
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid var(--szin-keret);
+    font-family: var(--betutipus-cim);
+    font-weight: bold;
+    color: var(--szin-fokek);
+}
+
+.sidebar-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--szin-szoveg);
+    line-height: 1;
+}
+
+.sidebar-list {
+    list-style: none;
+    padding: 0.5rem 0;
+}
+
+.sidebar-list li a {
+    display: block;
+    padding: 0.75rem 1.2rem;
+    color: var(--szin-szoveg);
+    text-decoration: none;
+}
+
+.sidebar-list li a:hover {
+    background-color: var(--szin-hatter);
+    color: var(--szin-kiemeles);
+}
+
+/* A sötét, félig átlátszó réteg, ami a sidebar mögött jelenik meg */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.35);
+    z-index: 150;
+
+    /* Alapból nem látszik és nem kattintható */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease;
+}
+
+.overlay.overlay-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ====================================================================
+   FŐ TARTALOM
+   ==================================================================== */
+.main-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+}
+
+.page-title {
+    font-family: var(--betutipus-cim);
+    font-size: 2.2rem;
+    color: var(--szin-fokek);
+    margin-bottom: 0.4rem;
+}
+
+.page-subtitle {
+    color: #6B6B6B;
+    margin-bottom: 2rem;
+}
+
+/* A "hidden" osztály egyszerűen eltünteti az elemet.
+   A JS ezt kapcsolja ki/be a két nézet (lista / cikk) között. */
+.hidden {
+    display: none;
+}
+
+/* ====================================================================
+   CIKK-KÁRTYÁK RÁCSA (a főoldalon)
+   ==================================================================== */
+.article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.3rem;
+}
+
+.article-card {
+    background-color: var(--szin-feher);
+    border: 1px solid var(--szin-keret);
+    border-radius: 6px;
+    padding: 1.3rem;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.15s ease;
+    font-family: var(--betutipus-szoveg);
+}
+
+.article-card:hover {
+    border-color: var(--szin-kiemeles);
+}
+
+.article-card-title {
+    font-family: var(--betutipus-cim);
+    font-size: 1.15rem;
+    color: var(--szin-fokek);
+    margin-bottom: 0.5rem;
+}
+
+.article-card-desc {
+    font-size: 0.92rem;
+    color: #5A5A5A;
+}
+
+/* ====================================================================
+   EGY CIKK MEGJELENÍTÉSE
+   ==================================================================== */
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--szin-kiemeles);
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    padding: 0.3rem 0;
+}
+
+.back-btn:hover {
+    text-decoration: underline;
+}
+
+.article-content {
+    background-color: var(--szin-feher);
+    border: 1px solid var(--szin-keret);
+    border-radius: 6px;
+    padding: 2rem;
+    max-width: 720px; /* rövidebb sortávolság a jobb olvashatóságért */
+}
+
+/* A Markdown-ból generált HTML elemek stílusai a cikken belül */
+.article-content h1,
+.article-content h2,
+.article-content h3 {
+    font-family: var(--betutipus-cim);
+    color: var(--szin-fokek);
+    margin-top: 1.4rem;
+    margin-bottom: 0.6rem;
+}
+
+.article-content h1:first-child {
+    margin-top: 0;
+}
+
+.article-content p {
+    margin-bottom: 1rem;
+}
+
+.article-content ul,
+.article-content ol {
+    margin: 0 0 1rem 1.4rem;
+}
+
+.article-content a {
+    color: var(--szin-kiemeles);
+}
+
+.article-content code {
+    background-color: var(--szin-hatter);
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+/* ====================================================================
+   MOBILNÉZET (kis képernyők, pl. telefon)
+   ==================================================================== */
+@media (max-width: 640px) {
+    /* Kis képernyőn elrejtjük a felső menü gombjait, hogy ne zsúfolódjon
+       össze minden — ezeket majd bővítheted, pl. betehetnéd a sidebarba is. */
+    .top-nav {
+        display: none;
+    }
+
+    .page-title {
+        font-size: 1.7rem;
+    }
+
+    .article-content {
+        padding: 1.3rem;
+    }
+}
